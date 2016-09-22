@@ -1,15 +1,7 @@
 function nativeStore(options) {
-  if(!options) {
-    options = {};
-  }
-  this.separator = options.separator || null;
-  this.lineEnding = options.lineEnd || null;
-  if (this.separator === null) {
-      this.separator = "null";
-  }
-  if (this.lineEnding === null) {
-      this.lineEnding = "null";
-  }
+  options = options || {};
+  this.separator = options.separator || "\t";
+  this.lineEnding = options.lineEnd || "\n";
 }
 
 nativeStore.prototype.init = function() {
@@ -17,7 +9,7 @@ nativeStore.prototype.init = function() {
 };
 
 nativeStore.prototype.stringify = function(data, callback) {
-  var processed = 'meta: {"separator": "'+this.separator+'", "lineEnding": "'+this.lineEnding+'"}\n';
+  var processed = "meta: "+ JSON.stringify({ separator: this.separator, lineEnding: this.lineEnding }) +"\n";
   for (var i in data) {
     processed += i + this.separator + JSON.stringify(data[i]) + this.lineEnding;
   }
